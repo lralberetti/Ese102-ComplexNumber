@@ -21,7 +21,12 @@ public class Ese102 {
 	double im =0;      
 	double argument=0; 
 	double modulus=0;
-        ComplexNumber cn = new ComplexNumber();
+        
+        ComplexNumber.setInitRectangular(45, 7);
+        
+        ComplexNumber n1 = new ComplexNumber();
+        ComplexNumber n2 = new ComplexNumber();
+        ComplexNumber ris = new ComplexNumber();
         boolean valoreValido=false;
         InputStreamReader input = new InputStreamReader (System.in);
         BufferedReader tastiera = new BufferedReader (input);
@@ -43,7 +48,7 @@ public class Ese102 {
             valoreValido=false;
             while(!valoreValido){
                 System.out.println("INSERISCI IL MODULO (MAGGIORE O UGUALE A ZERO): ");
-                linea=tastiera.readLine();
+                linea=tastiera.readLine(); 
                 try{
                     modulus=Double.valueOf(linea).doubleValue();
                     valoreValido=true;
@@ -68,10 +73,11 @@ public class Ese102 {
                 catch(NumberFormatException e){
                     System.out.println("NON HAI INSERITO UN VALORE CORRETTO");
                 }
-            }
-            cn.SetPolar(modulus,argument);
-            System.out.println("PARTE REALE " + cn.getRe());
-            System.out.println("PARTE IMMAGINARIA: " + cn.getIm()); 
+              }
+            
+            n1.SetPolar(modulus,argument);
+            System.out.println("PARTE REALE " + n1.getRe());
+            System.out.println("PARTE IMMAGINARIA: " + n1.getIm()); 
            
         }
         else{
@@ -99,11 +105,147 @@ public class Ese102 {
                     catch(NumberFormatException e){
                         System.out.println("NON HAI INSERITO UN VALORE CORRETTO");
                     }  
-                    cn.SetRectangular(im, re);
-            System.out.println("IL MODULO è: " + cn.getModulus());
-            System.out.println("L'ANGOLO THETA è:" + cn.getArgument());
+            n1.SetRectangular(im, re);
+            System.out.println("IL MODULO è: " + n1.getModulus());
+            System.out.println("L'ANGOLO THETA è:" + n1.getArgument());
             }
-        } 
-    }
-    
-}
+        }
+            valoreValido=false;
+            int operazione=0;
+            while(!valoreValido){
+                 System.out.println("Che operazione vuoi svolgere?");
+                 System.out.println("1-> Addizione 2-> Sottrazione 3-> Moltiplicazione 4-> Divisione 5->Coniugato");
+                 linea=tastiera.readLine();        
+                try{
+                    operazione=Integer.valueOf(linea).intValue();
+                    valoreValido=true;
+                }
+                catch(NumberFormatException e){
+                    System.out.println("NON HAI INSERITO UN VALORE CORRETTO");
+                }
+            
+            }
+            if(operazione==1){
+                valoreValido=false;
+                while(!valoreValido){
+                System.out.println("INSERISCI LA PARTE REALE CHE VUOI AGGIUNGERE ");
+                linea=tastiera.readLine();
+                try{
+                    re=Double.valueOf(linea).doubleValue();
+                    valoreValido=true;
+                }
+                catch(NumberFormatException e){
+                    System.out.println("NON HAI INSERITO UN VALORE CORRETTO");
+                }
+            }
+                
+            valoreValido=false;
+            while(!valoreValido){
+                System.out.println("INSERISCI LA PARTE IMMAGINARA CHE VUOI AGGIUNGERE: ");
+                linea=tastiera.readLine();
+                try{
+                    im=Double.valueOf(linea).doubleValue();
+                    valoreValido=true;
+                }
+                catch(NumberFormatException e){
+                    System.out.println("NON HAI INSERITO UN VALORE CORRETTO");
+                }
+            }
+            n2.SetRectangular(im, re);
+            ris=n1.add(n2);
+            System.out.println(n1.formatComplexNumber() +"+"+n2.formatComplexNumber()+"="+ ris.formatComplexNumber());    //il metodo vieni richiamato da un oggetto quindi viene messo prima n1-> oggetto . ->accedo al metodo
+        }
+            else if(operazione==2){
+                    valoreValido=false;
+                    while(!valoreValido){
+                        System.out.println("INSERISCI LA PARTE LA REALE CHE VUOI SOTTRARRE: ");
+                        linea=tastiera.readLine();
+                        try{
+                            re=Double.valueOf(linea).doubleValue();
+                            valoreValido=true;
+                        }
+                        catch(NumberFormatException e){
+                            System.out.println("NON HAI INSERITO UN VALORE CORRETTO");
+                        }
+                    }
+                    valoreValido=false;
+                    while(!valoreValido)
+                        System.out.println("INSERISCI LA PARTE IMMAGINARIA CHE VUOI SOTTRARRE: ");
+                        linea=tastiera.readLine();
+                        try{
+                            im=Double.valueOf(linea).doubleValue();
+                            valoreValido=true;
+                        }
+                        catch(NumberFormatException e){
+                            System.out.println("NON HAI INSERITO UN VALORE CORRETTO");
+                        }
+                        n2.SetRectangular(im, re);
+                        ris=n1.sub(n2);
+                        System.out.println(n1.formatComplexNumber()+"-"+n2.formatComplexNumber()+"="+ris.formatComplexNumber());
+                    }
+                    else if(operazione==3)
+                    {
+                    valoreValido=false;
+                    while(!valoreValido){
+                        System.out.println("INSERISCI IL MODULO: ");
+                        linea=tastiera.readLine();
+                        try{
+                            modulus=Double.valueOf(linea).doubleValue();
+                            valoreValido=true;
+                        }
+                        catch(NumberFormatException e){
+                            System.out.println("NON HAI INSERITO UN VALORE CORRETTO");
+                        }
+                    }
+                    valoreValido=false;
+                    while(!valoreValido){
+                        System.out.println("INSERISCI L'ANGOLO THETA");
+                        linea=tastiera.readLine();
+                        try{
+                            argument=Double.valueOf(linea).doubleValue();
+                            valoreValido=true;
+                        }
+                        catch(NumberFormatException e){
+                            System.out.println("NON HAI INSERITO UN VALORE CORRETTO");
+                        }
+                    }
+                    n2.SetPolar(modulus, argument);
+                    ris=n1.multiply(n2);
+                    System.out.println(n1.formatComplexNumber()+"*"+n2.formatComplexNumber()+"="+ris.formatComplexNumber());
+                    }
+                    else if(operazione==4){                    {
+                    valoreValido=false;
+                    while(!valoreValido){
+                        System.out.println("INSERISCI IL MODULO: ");
+                        linea=tastiera.readLine();
+                        try{
+                            modulus=Double.valueOf(linea).doubleValue();
+                            valoreValido=true;
+                        }
+                        catch(NumberFormatException e){
+                            System.out.println("NON HAI INSERITO UN VALORE CORRETTO");
+                        }
+                    }
+                    valoreValido=false;
+                    while(!valoreValido){
+                        System.out.println("INSERISCI L'ANGOLO THETA");
+                        linea=tastiera.readLine();
+                        try{
+                            argument=Double.valueOf(linea).doubleValue();
+                            valoreValido=true;
+                        }
+                        catch(NumberFormatException e){
+                            System.out.println("NON HAI INSERITO UN VALORE CORRETTO");
+                        }
+                    }
+                    n2.SetPolar(modulus, argument);
+                    ris=n1.divide(n2);
+                    System.out.println(n1.formatComplexNumber()+"/"+n2.formatComplexNumber()+"="+ris.formatComplexNumber());
+                    }
+                 }
+                 else
+                 ris=n1.conjgate();
+                 System.out.println(n1.formatComplexNumber());
+           }   
+}    
+

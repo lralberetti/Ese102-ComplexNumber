@@ -13,8 +13,36 @@ import static java.lang.Math.*;
  * @author user
  */
 public class ComplexNumber {
+    static private double initRe;
+    static private double initIm;
+    
     private double re;
     private double im;
+    
+    static public void setInitRectangular(double re, double im) {
+        initRe = re;
+        initIm = im;
+    }
+    
+    static public void setInitPolar(double modulus, double argument) {
+        if(modulus < 0)
+        {
+            throw new IllegalArgumentException("Modulus must be greater or equal to 0");
+        }
+        initRe = modulus * Math.cos(argument);
+        initIm = modulus * Math.sin(argument);
+    }
+    
+    static public ComplexNumber add(ComplexNumber operand1, ComplexNumber operand2) {
+        ComplexNumber result = new ComplexNumber();
+        result.SetRectangular(operand1.getRe()+operand2.getRe(), operand1.getIm() + operand2.getIm());
+        return result;
+    }
+    
+    public ComplexNumber() {
+        this.re = initRe;
+        this.im = initIm;
+    }
     
     public String formatComplexNumber()
     {
@@ -87,7 +115,67 @@ public class ComplexNumber {
         }
         else
         	throw new IllegalArgumentException("INSERISCI UN VALORE MAGGIORE DI 0");
-    }   
+    }
+    /**
+     * Ritorna un complex number che è l'addizione della parte reale e immaginaria dei due numeri complessi
+     * @param addendo
+     * @return 
+     */
+    public ComplexNumber add(ComplexNumber operand){
+        ComplexNumber somma=new ComplexNumber();
+        double re=this.re+operand.getRe();
+        double im=this.im+operand.getIm();
+        somma.SetRectangular(im, re);        //con il . si accede sia al campo sia ai metodi.
+        return somma;
+    }
+    /**
+     * Ritorna un complex number che è la sottrazione della parte reale e immaginaria dei due numeri complessi
+     * @param operand
+     * @return 
+     */
+    public ComplexNumber sub(ComplexNumber operand){
+        ComplexNumber sottrazione=new ComplexNumber();
+        double re=this.re-operand.getRe();
+        double im=this.im-operand.getIm();
+        sottrazione.SetRectangular(im, re);
+        return sottrazione;
+    }
+    /**
+     * ritorna un complex number che è la moltiplicazione di mudulo e argomento dei due numeri complessi
+     * @param operand
+     * @return 
+     */
+    public ComplexNumber multiply(ComplexNumber operand){
+        ComplexNumber moltiplicazione=new ComplexNumber();
+        double modulus= this.getModulus()*operand.getModulus();
+        double argument= this.getArgument()*operand.getArgument();
+        moltiplicazione.SetPolar(modulus, argument);
+        return moltiplicazione;
+    }
+    /**
+     * ritorna un complex number che è la divisione di modulo e argomento dei due numeri complessi
+     * @param operand
+     * @return 
+     */
+    public ComplexNumber divide(ComplexNumber operand){
+        ComplexNumber divisione=new ComplexNumber();
+        double mudulus=this.getModulus()/operand.getModulus();
+        double argument=this.getArgument()-operand.getArgument();
+        divisione.SetPolar(mudulus, argument);
+        return divisione;
+    }
+    /**
+     * im cambiato di segno
+     * @param operand
+     * @return 
+     */
+    public ComplexNumber conjgate(){
+        ComplexNumber coniugato=new ComplexNumber();
+        double re=this.getRe();
+        double im=this.getIm()*-1;
+        coniugato.SetRectangular(im, re);
+        return coniugato;
+    }
 }
 /**
  * SONO STATE UTILIZZATE LE 4 FUNZIONI GETTER (getRe, getIm, getModulus, getArgument), E SOLO DUE
