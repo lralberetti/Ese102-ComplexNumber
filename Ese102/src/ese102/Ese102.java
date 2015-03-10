@@ -17,11 +17,12 @@ public class Ese102 {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException {
+    /**
         double re = 0;
 	double im =0;      
 	double argument=0; 
 	double modulus=0;
-        
+                
         ComplexNumber.setInitRectangular(45, 7);
         
         ComplexNumber n1 = new ComplexNumber();
@@ -111,7 +112,20 @@ public class Ese102 {
             }
         }
             valoreValido=false;
-            int operazione=0;
+        */
+        double re = 0;
+	double im =0;      
+	double argument=0; 
+	double modulus=0;        
+        ComplexNumber.setInitRectangular(45, 7);
+        ComplexNumber n1 = new ComplexNumber();
+        ComplexNumber n2 = new ComplexNumber();
+        ComplexNumber ris = new ComplexNumber();
+        boolean valoreValido=false;
+        InputStreamReader input = new InputStreamReader (System.in);
+        BufferedReader tastiera = new BufferedReader (input);
+        String linea;
+        int operazione=0;
             while(!valoreValido){
                  System.out.println("Che operazione vuoi svolgere?");
                  System.out.println("1-> Addizione 2-> Sottrazione 3-> Moltiplicazione 4-> Divisione 5->Coniugato");
@@ -151,9 +165,35 @@ public class Ese102 {
                     System.out.println("NON HAI INSERITO UN VALORE CORRETTO");
                 }
             }
+            n1.SetRectangular(im, re);
+                valoreValido=false;
+                while(!valoreValido){
+                System.out.println("INSERISCI LA PARTE REALE DEL SECONDO ADDENDO: ");
+                linea=tastiera.readLine();
+                try{
+                    re=Double.valueOf(linea).doubleValue();
+                    valoreValido=true;
+                }
+                catch(NumberFormatException e){
+                    System.out.println("NON HAI INSERITO UN VALORE CORRETTO");
+                }
+            }
+                
+            valoreValido=false;
+            while(!valoreValido){
+                System.out.println("INSERISCI LA PARTE IMMAGINARA DEL SECONDO ADDENDO: ");
+                linea=tastiera.readLine();
+                try{
+                    im=Double.valueOf(linea).doubleValue();
+                    valoreValido=true;
+                }
+                catch(NumberFormatException e){
+                    System.out.println("NON HAI INSERITO UN VALORE CORRETTO");
+                }
+            }
             n2.SetRectangular(im, re);
-            ris=n1.add(n2);
-            System.out.println(n1.formatComplexNumber() +"+"+n2.formatComplexNumber()+"="+ ris.formatComplexNumber());    //il metodo vieni richiamato da un oggetto quindi viene messo prima n1-> oggetto . ->accedo al metodo
+            ris=ComplexNumber.add(n1, n2);
+            System.out.println(ris.formatComplexNumber());    //il metodo vieni richiamato da un oggetto quindi viene messo prima n1-> oggetto . ->accedo al metodo
         }
             else if(operazione==2){
                     valoreValido=false;

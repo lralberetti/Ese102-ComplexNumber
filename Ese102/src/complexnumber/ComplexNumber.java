@@ -18,11 +18,20 @@ public class ComplexNumber {
     
     private double re;
     private double im;
-    
+    /**
+     * 
+     * @param re
+     * @param im 
+     */
     static public void setInitRectangular(double re, double im) {
         initRe = re;
         initIm = im;
     }
+    /**
+     * 
+     * @param modulus
+     * @param argument 
+     */
     
     static public void setInitPolar(double modulus, double argument) {
         if(modulus < 0)
@@ -32,13 +41,65 @@ public class ComplexNumber {
         initRe = modulus * Math.cos(argument);
         initIm = modulus * Math.sin(argument);
     }
+    /**
+     * 
+     * @param operand1
+     * @param operand2
+     * @return 
+     */
     
     static public ComplexNumber add(ComplexNumber operand1, ComplexNumber operand2) {
-        ComplexNumber result = new ComplexNumber();
-        result.SetRectangular(operand1.getRe()+operand2.getRe(), operand1.getIm() + operand2.getIm());
-        return result;
+        ComplexNumber ris = new ComplexNumber();
+        ris.SetRectangular(operand1.getRe()+operand2.getRe(), operand1.getIm() + operand2.getIm());
+        return ris;
     }
+    /**
+     * 
+     * @param operand1
+     * @param operand2
+     * @return 
+     */
     
+    static public ComplexNumber sub(ComplexNumber operand1, ComplexNumber operand2){
+        ComplexNumber ris= new ComplexNumber();
+        ris.SetRectangular(operand1.getRe()-operand2.getRe(),operand1.getIm() - operand2.getIm());
+        return ris;
+    }
+    /**
+     * 
+     * @param operand1
+     * @param operand2
+     * @return 
+     */
+    static public ComplexNumber divide(ComplexNumber operand1, ComplexNumber operand2){
+        ComplexNumber ris= new ComplexNumber();
+        ris.SetPolar(operand1.getModulus()/operand2.getModulus(), operand1.getArgument()-operand2.getArgument());
+        return ris;
+    }
+    /**
+     * 
+     * @param operand1
+     * @param operand2
+     * @return 
+     */
+  static public ComplexNumber multiply(ComplexNumber operand1,ComplexNumber operand2){
+        ComplexNumber ris = new ComplexNumber();
+        ris.SetPolar(operand1.getModulus()*operand2.getModulus(),operand1.getArgument()+operand2.getArgument());
+        return ris;
+    }
+  /**
+   * 
+   * @param operand
+   * @return 
+   */
+  
+  static public ComplexNumber conjgate(ComplexNumber operand){
+      ComplexNumber ris= new ComplexNumber();
+      double re=operand.getRe();
+      double im=operand.getIm()*-1;
+      ris.SetRectangular(im, re);
+      return ris;    
+  }
     public ComplexNumber() {
         this.re = initRe;
         this.im = initIm;
