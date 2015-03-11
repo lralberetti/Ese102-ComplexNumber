@@ -15,9 +15,12 @@ import static java.lang.Math.*;
 public class ComplexNumber {
     static private double initRe;
     static private double initIm;
+    static private StringFormat initFormat;
     
     private double re;
     private double im;
+    private StringFormat format;
+    
     /**
      * 
      * @param re
@@ -42,6 +45,52 @@ public class ComplexNumber {
         initIm = modulus * Math.sin(argument);
     }
     /**
+     * Caratteristica dell'oggetto ComplexNumber, assegnadogli sia le coordinate polari e rettangolari
+     */
+    static public enum  StringFormat{
+        RECTANGULAR,
+        POLAR
+    }
+    
+    public String ToString(){
+        return toString(this.format);
+	}
+    /**
+     * 
+     * @param format
+     * @return 
+     */
+    public String toString(StringFormat format) {
+        String r = new String();
+        switch(format) {
+		case RECTANGULAR:
+			r = this.re + "+(" + this.im + ")i";
+			break;
+		case POLAR:
+			r = this.getModulus() + "*exp(i*" + this.getArgument() +")";
+			break;
+		default:
+			throw new UnsupportedOperationException();
+		}
+		return r;
+    }
+    
+    /**
+     * 
+     * @param o
+     * @return 
+     */
+    public boolean equals(Object o) {
+		boolean r = false;
+		if(o instanceof ComplexNumber) {
+			ComplexNumber p = (ComplexNumber)o;
+			if(this.re == p.getRe() && this.im == p.getIm()) {
+				r = true;
+			}
+		}
+		return r;
+	}
+    /**
      * 
      * @param operand1
      * @param operand2
@@ -53,6 +102,8 @@ public class ComplexNumber {
         ris.SetRectangular(operand1.getRe()+operand2.getRe(), operand1.getIm() + operand2.getIm());
         return ris;
     }
+    
+    
     /**
      * 
      * @param operand1
