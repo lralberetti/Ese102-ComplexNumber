@@ -16,22 +16,23 @@ public class ComplexNumber {
     static private double initRe;
     static private double initIm;
     static private StringFormat initFormat;
-    
     private double re;
     private double im;
     private StringFormat format;
     
     /**
-     * 
+     * Inizializza i campi di classe initRe ed initIm nonchè il formato di rappresentazione RETTANGOLARE
      * @param re
      * @param im 
      */
     static public void setInitRectangular(double re, double im) {
         initRe = re;
         initIm = im;
+        initFormat= StringFormat.RECTANGULAR;
     }
     /**
-     * 
+     * Inizializzo i campi di classe initRe, initIm nonchè il formato di rappresentazione Polare
+     * Se inserito modulo < 0 creo e lancio un eccezione.
      * @param modulus
      * @param argument 
      */
@@ -43,16 +44,86 @@ public class ComplexNumber {
         }
         initRe = modulus * Math.cos(argument);
         initIm = modulus * Math.sin(argument);
+        initFormat= StringFormat.POLAR;
+        }
+    /**
+     * somma i valori degli oggetti ricevuti come paramento in una instanza(oggetto)
+     * @param operand1
+     * @param operand2
+     * @return una instanza con il risultato
+     */
+        static public ComplexNumber add(ComplexNumber operand1, ComplexNumber operand2) {
+        ComplexNumber ris = new ComplexNumber();
+        ris.setRectangular(operand1.getRe()+operand2.getRe(), operand1.getIm() + operand2.getIm());
+        return ris;
+        }
+    
+    
+    /**
+     *sottrae il valore del secondo oggetto al primo, ricevuti come parametro in una instanza (oggetto)
+     * @param operand1
+     * @param operand2
+     * @return una instanza con il risultato
+     */
+    
+    static public ComplexNumber sub(ComplexNumber operand1, ComplexNumber operand2){
+        ComplexNumber ris= new ComplexNumber();
+        ris.setRectangular(operand1.getRe()-operand2.getRe(),operand1.getIm() - operand2.getIm());
+        return ris;
+    }
+    
+    /**
+     * divide il valore del primo oggetto ottenuto come parametro per il secondo per il modulo, mentre la differenza per gli argomenti 
+     * @param operand1
+     * @param operand2
+     * @return una instanza con il risultato
+     */
+    static public ComplexNumber divide(ComplexNumber operand1, ComplexNumber operand2){
+        ComplexNumber ris= new ComplexNumber();
+        ris.setPolar(operand1.getModulus()/operand2.getModulus(), operand1.getArgument()-operand2.getArgument());
+        return ris;
     }
     /**
-     * Caratteristica dell'oggetto ComplexNumber, assegnadogli sia le coordinate polari e rettangolari
+     * moltiplica il valore del primo oggetto ottenuto come parametro per il secondo, mentre si fa la somma per gli argomenti
+     * @param operand1
+     * @param operand2
+     * @return una instanza con il risultato
+     */
+  static public ComplexNumber multiply(ComplexNumber operand1,ComplexNumber operand2){
+        ComplexNumber ris = new ComplexNumber();
+        ris.setPolar(operand1.getModulus()*operand2.getModulus(),operand1.getArgument()+operand2.getArgument());
+        return ris;
+    }
+    
+  
+  /**
+    * im cambiato di segno
+    * @param operand
+    * @return una instanza con il risultato
+    */
+ 
+     static public ComplexNumber conjgate(ComplexNumber operand){
+     ComplexNumber ris= new ComplexNumber();
+     double re=operand.getRe();
+     double im=operand.getIm()*-1;
+     ris.setRectangular(im, re);
+     return ris;    
+  }
+
+    /**
+     * definisco i due possibili valori che una variabile di tipo StringFormat può assumere
      */
     static public enum  StringFormat{
         RECTANGULAR,
         POLAR
     }
-    
-    public String ToString(){
+    /**
+     * Ridefinizione del metodo toString poichè esso è gia implementato nella 
+     * classe Object in questo metodo lo specializzo aggiungendo questa funzione.
+     * 
+     * @return 
+     */
+    @Override public String toString(){
         return toString(this.format);
 	}
     /**
@@ -76,10 +147,12 @@ public class ComplexNumber {
     }
     
     /**
-     * 
+     * restituisce vero se l'oggetto invocante della classe ComplexNumber e
+     * quello passato come argomento,della medesima classe,sono uguali
      * @param o
      * @return 
      */
+    @Override 
     public boolean equals(Object o) {
 		boolean r = false;
 		if(o instanceof ComplexNumber) {
@@ -90,70 +163,17 @@ public class ComplexNumber {
 		}
 		return r;
 	}
+    
     /**
-     * 
+     * Costruttore che inizializza i campi dell'oggetto a initRe, initIm ed initFormat
      * @param operand1
      * @param operand2
      * @return 
      */
-    
-    static public ComplexNumber add(ComplexNumber operand1, ComplexNumber operand2) {
-        ComplexNumber ris = new ComplexNumber();
-        ris.SetRectangular(operand1.getRe()+operand2.getRe(), operand1.getIm() + operand2.getIm());
-        return ris;
-    }
-    
-    
-    /**
-     * 
-     * @param operand1
-     * @param operand2
-     * @return 
-     */
-    
-    static public ComplexNumber sub(ComplexNumber operand1, ComplexNumber operand2){
-        ComplexNumber ris= new ComplexNumber();
-        ris.SetRectangular(operand1.getRe()-operand2.getRe(),operand1.getIm() - operand2.getIm());
-        return ris;
-    }
-    /**
-     * 
-     * @param operand1
-     * @param operand2
-     * @return 
-     */
-    static public ComplexNumber divide(ComplexNumber operand1, ComplexNumber operand2){
-        ComplexNumber ris= new ComplexNumber();
-        ris.SetPolar(operand1.getModulus()/operand2.getModulus(), operand1.getArgument()-operand2.getArgument());
-        return ris;
-    }
-    /**
-     * 
-     * @param operand1
-     * @param operand2
-     * @return 
-     */
-  static public ComplexNumber multiply(ComplexNumber operand1,ComplexNumber operand2){
-        ComplexNumber ris = new ComplexNumber();
-        ris.SetPolar(operand1.getModulus()*operand2.getModulus(),operand1.getArgument()+operand2.getArgument());
-        return ris;
-    }
-  /**
-   * 
-   * @param operand
-   * @return 
-   */
-  
-  static public ComplexNumber conjgate(ComplexNumber operand){
-      ComplexNumber ris= new ComplexNumber();
-      double re=operand.getRe();
-      double im=operand.getIm()*-1;
-      ris.SetRectangular(im, re);
-      return ris;    
-  }
     public ComplexNumber() {
         this.re = initRe;
         this.im = initIm;
+        this.format= initFormat;
     }
     
     public String formatComplexNumber()
@@ -176,6 +196,10 @@ public class ComplexNumber {
         return im;
     }
     
+    public void setStringFormat(StringFormat format) {
+		this.format = format;
+	}
+    
     /**
      * RITORNA IL VETTORE DI MODULO CALCOLATO
      *@return    
@@ -185,28 +209,38 @@ public class ComplexNumber {
     }
     
     /**
-     * RITORNA L'ANGOLO THETA.
+     * toDegrees transformo gli angoli in gradi.
+     * Il valore di ritorno è in gradi sessehesimali.
      * @return 
      */
     
     public double getArgument(){
-        
-        //Chiedere le altre relazioni, in questo modo è sbagliato.
-        double r;
-        if(im==0 && re==0)
-            r=0;
-        else
-            r= (atan(this.im/this.re)*180)/Math.PI;       
-            return r;
-            
+        double argument = 0;
+		if(re == 0 || im == 0)
+		{
+                    argument = 0;
+			if(im > 0)
+				argument = 90;
+			else if(im < 0)
+				argument = 270;
+		}
+		else
+		{
+			argument = Math.toDegrees(Math.atan(this.im/this.re));
+			if (re < 0 && im > 0 || re < 0 && im < 0)
+				argument =argument + 180;
+			else if (re > 0 && im < 0)
+				argument =argument + 360;
+		}
+		return argument;
     }
-   
+
     /**
     * IN IMPUT RICEVO LE COORDINATE RETTANGOLARI O CARTESIANE
     * QUINDI LE SETTO UGUALI ALL'INPUT
     */
 
-    public void SetRectangular(double im, double re){
+    public void setRectangular(double im, double re){
         this.im=im;
         this.re=re;
     }
@@ -215,8 +249,9 @@ public class ComplexNumber {
      *  SOHCAHTOA
      *  (RE=ADIACENT)--> CAH --> COS(THETA)*HYP
      *  (IM=OPP)--> SOH --> IM= SEN(THETA)*HYP 
+     *  Setto quindi le coordinatre polari a seconda di quanto ricevuto in input
      */    
-    public void SetPolar(double modulus, double argument){
+    public void setPolar(double modulus, double argument){
         if(modulus >= 0)
         {
         	this.re = Math.cos(argument*Math.PI/180)*modulus;
@@ -230,67 +265,69 @@ public class ComplexNumber {
     }
     /**
      * Ritorna un complex number che è l'addizione della parte reale e immaginaria dei due numeri complessi
-     * @param addendo
-     * @return 
+     * @param operand
+     * @return un instanza con il risultato
      */
     public ComplexNumber add(ComplexNumber operand){
         ComplexNumber somma=new ComplexNumber();
         double re=this.re+operand.getRe();
         double im=this.im+operand.getIm();
-        somma.SetRectangular(im, re);        //con il . si accede sia al campo sia ai metodi.
+        somma.setRectangular(im, re);        //con il . si accede sia al campo sia ai metodi.
         return somma;
     }
     /**
      * Ritorna un complex number che è la sottrazione della parte reale e immaginaria dei due numeri complessi
      * @param operand
-     * @return 
+     * @return un instanza con il risultato
      */
     public ComplexNumber sub(ComplexNumber operand){
         ComplexNumber sottrazione=new ComplexNumber();
         double re=this.re-operand.getRe();
         double im=this.im-operand.getIm();
-        sottrazione.SetRectangular(im, re);
+        sottrazione.setRectangular(im, re);
         return sottrazione;
     }
     /**
-     * ritorna un complex number che è la moltiplicazione di mudulo e argomento dei due numeri complessi
+     * ritorna un complex number che è la moltiplicazione di mudulo 
+     * e la somma dei due argomenti dei numeri complessi
      * @param operand
-     * @return 
+     * @return un instanza con il risultato
      */
     public ComplexNumber multiply(ComplexNumber operand){
         ComplexNumber moltiplicazione=new ComplexNumber();
         double modulus= this.getModulus()*operand.getModulus();
-        double argument= this.getArgument()*operand.getArgument();
-        moltiplicazione.SetPolar(modulus, argument);
+        double argument= this.getArgument()+operand.getArgument();
+        moltiplicazione.setPolar(modulus, argument);
         return moltiplicazione;
     }
     /**
-     * ritorna un complex number che è la divisione di modulo e argomento dei due numeri complessi
+     * ritorna un complex number che è la divisione di modulo 
+     * e la differenza dei due argomenti dei numeri complessi
      * @param operand
-     * @return 
+     * @return un instanza con il risultato
      */
     public ComplexNumber divide(ComplexNumber operand){
         ComplexNumber divisione=new ComplexNumber();
         double mudulus=this.getModulus()/operand.getModulus();
         double argument=this.getArgument()-operand.getArgument();
-        divisione.SetPolar(mudulus, argument);
+        divisione.setPolar(mudulus, argument);
         return divisione;
     }
+  
     /**
-     * im cambiato di segno
-     * @param operand
-     * @return 
-     */
-    public ComplexNumber conjgate(){
+    * creo un instanza per il coniugato.
+    * @return una nuova instanza con il coniugato.
+    */    
+    public ComplexNumber getConjugate(){
         ComplexNumber coniugato=new ComplexNumber();
         double re=this.getRe();
         double im=this.getIm()*-1;
-        coniugato.SetRectangular(im, re);
+        coniugato.setRectangular(im, re);
         return coniugato;
     }
 }
 /**
  * SONO STATE UTILIZZATE LE 4 FUNZIONI GETTER (getRe, getIm, getModulus, getArgument), E SOLO DUE
- * FUNZIONI SETTER (SetPolar, SetRectangular) PERCHè PER CALCOLARE IM E RE HO BISOGNO DEL MODULO E L'ARGOMENTO.
+ * FUNZIONI SETTER (SetPolar, SetRectangular) PERCHè PER CALCOLARE IM E RE HO BISOGNO DEL MODULO E L'ARGOMENTO, poichè i parametri devono NECESSARIAMENTE lavorare in coppia.
  * PER CALCOLARE MODULO E ARGOMENTO SI SONO UTILIZZATE LE RELAZIONI CON IM E RE.
 */
